@@ -8,11 +8,11 @@ public class PointObject {
         Point p3 = new Point(2, 2);
         Point p4 = new Point(18, 18);
 
-        System.out.println(distanceFromNew(p3, p4));
+        System.out.println(distanceFromPointObject(p3, p4));
 
     }
 
-    public static double distanceFromNew(Point a, Point b) {
+    public static double distanceFromPointObject(Point a, Point b) {
         return Math.sqrt((b.x - a.x) * 2 + (b.y - a.y) * 2);
     }
 }

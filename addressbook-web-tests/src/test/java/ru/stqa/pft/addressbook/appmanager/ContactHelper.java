@@ -26,7 +26,7 @@ public class ContactHelper extends BaseHelper {
         click(By.linkText("add new"));
     }
 
-    public void selectContact() {
+    public void clickOnEditButton() {
         click(By.xpath("//td[@class='center'][3]//img[@title='Edit']"));
     }
 
@@ -36,6 +36,10 @@ public class ContactHelper extends BaseHelper {
 
     public void deleteContact() {
         click(By.xpath("(//input[@value='Delete'])"));
+    }
+
+    public void markCheckbox() {
+        click(By.xpath("/html[1]/body[1]/div[1]/div[4]/form[2]/table[1]/tbody[1]/tr[2]/td[1]/input[1]"));
     }
 
 }

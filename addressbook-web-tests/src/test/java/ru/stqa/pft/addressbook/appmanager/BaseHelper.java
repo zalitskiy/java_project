@@ -34,4 +34,8 @@ public class BaseHelper {
     protected void get(String url) {
         wd.get(url);
     }
+
+    public void acceptAlert() {
+        wd.switchTo().alert().accept();
+    }
 }

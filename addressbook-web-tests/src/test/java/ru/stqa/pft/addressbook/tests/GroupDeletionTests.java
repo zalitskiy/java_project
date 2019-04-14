@@ -1,16 +1,15 @@
-package ru.stqa.pft.addressbook;
+package ru.stqa.pft.addressbook.tests;
 
-import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
 public class GroupDeletionTests extends TestBase {
 
   @Test
   public void testGroupDeletion() throws Exception {
-    gotoGroupPage();
-    selectGroup();
-    deleteSelectedGroups();
-    gotoGroupPage();
+    app.gotoGroupPage();
+    app.selectGroup();
+    app.deleteSelectedGroups();
+    app.gotoGroupPage();
   }
 
 }

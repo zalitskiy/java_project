@@ -30,4 +30,8 @@ public class BaseHelper {
             return false;
         }
     }
+
+    protected void get(String url) {
+        wd.get(url);
+    }
 }

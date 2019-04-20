@@ -9,7 +9,7 @@ public class BaseHelper {
 
     protected WebDriver wd;
 
-    public BaseHelper(FirefoxDriver wd) {
+    public BaseHelper(WebDriver wd) {
         this.wd = wd;
     }
 

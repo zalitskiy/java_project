@@ -47,7 +47,7 @@ public class GroupHelper extends BaseHelper {
         returntoGroupPage();
     }
 
-    private void returntoGroupPage() {
+    public void returntoGroupPage() {
         get("http://localhost/addressbook/group.php");
     }
 

@@ -7,17 +7,17 @@ import org.openqa.selenium.WebDriver;
 
 public class BaseHelper {
 
-    protected WebDriver wd;
+    public WebDriver wd;
 
     public BaseHelper(WebDriver wd) {
         this.wd = wd;
     }
 
-    protected void click(By locator) {
+    public void click(By locator) {
         wd.findElement(locator).click();
     }
 
-    protected void type(By locator, String text) {
+    public void type(By locator, String text) {
         click(locator);
         if (text != null) {
             String existingText = wd.findElement(locator).getAttribute("value");
@@ -36,7 +36,7 @@ public class BaseHelper {
         }
     }
 
-    protected void get(String url) {
+    public void get(String url) {
         wd.get(url);
     }
 
@@ -44,7 +44,7 @@ public class BaseHelper {
         wd.switchTo().alert().accept();
     }
 
-    protected boolean isElementPresent(By locator) {
+    public boolean isElementPresent(By locator) {
         try {
             wd.findElement(locator);
             return true;

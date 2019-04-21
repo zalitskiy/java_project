@@ -56,7 +56,7 @@ public class ContactHelper extends BaseHelper {
         gotoHomePage();
     }
 
-    private void gotoHomePage() {
+    public void gotoHomePage() {
         if (isElementPresent(By.id("maintable"))) {
             return;
         }

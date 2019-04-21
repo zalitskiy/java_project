@@ -17,8 +17,4 @@ public class NavigationHelper extends BaseHelper {
         }
         click(By.linkText("groups"));
     }
-
-    public void gotoHomePage() {
-        get("http://localhost/addressbook/");
-    }
 }

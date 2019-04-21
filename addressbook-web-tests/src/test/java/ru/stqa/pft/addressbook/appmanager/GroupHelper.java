@@ -44,10 +44,10 @@ public class GroupHelper extends BaseHelper {
         initGroupCreation();
         fillGroupForm(group);
         submitGroupCreation();
-        returntoGroupPage();
+        returnToGroupPage();
     }
 
-    public void returntoGroupPage() {
+    public void returnToGroupPage() {
         get("http://localhost/addressbook/group.php");
     }
 

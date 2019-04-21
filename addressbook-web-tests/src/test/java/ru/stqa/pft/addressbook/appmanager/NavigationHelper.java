@@ -19,9 +19,6 @@ public class NavigationHelper extends BaseHelper {
     }
 
     public void gotoHomePage() {
-        if (isElementPresent(By.id("maintable"))) {
-            return;
-        }
         get("http://localhost/addressbook/");
     }
 }

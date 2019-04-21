@@ -46,7 +46,24 @@ public class ContactHelper extends BaseHelper {
     }
 
     public void markCheckbox() {
-        click(By.xpath("/html[1]/body[1]/div[1]/div[4]/form[2]/table[1]/tbody[1]/tr[2]/td[1]/input[1]"));
+        click(By.name("selected[]"));
     }
 
+    public void createContact(ContactData contactData, boolean creation) {
+        gotoUserCreationPage();
+        fillContactForm(contactData, creation);
+        submitContactCreation();
+        gotoHomePage();
+    }
+
+    private void gotoHomePage() {
+        if (isElementPresent(By.id("maintable"))) {
+            return;
+        }
+        get("http://localhost/addressbook/");
+    }
+
+    public boolean isThereAContact() {
+        return isElementPresent(By.name("selected[]"));
+    }
 }

@@ -3,7 +3,7 @@ package ru.stqa.pft.addressbook.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class ContactCreation extends TestBase {
@@ -13,11 +13,22 @@ public class ContactCreation extends TestBase {
         app.getContactHelper().get("http://localhost/addressbook/");
         List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().gotoUserCreationPage();
-        app.getContactHelper().fillContactForm(new ContactData("Sergey", "Zalitskiy", "Kharkov", "12345678", "myemail@mail.ru", "[none]"), true);
+        ContactData contact = new ContactData("Sergey", "Zalitskiy", "Kharkov", "12345678", "myemail@mail.ru", "[none]");
+        app.getContactHelper().fillContactForm(contact, true);
         app.getContactHelper().submitContactCreation();
         app.getNavigationHelper().gotoHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() + 1);
+
+        int max = 0;
+        for (ContactData c: after) {
+            if (c.getId() > max){
+                max = c.getId();
+            }
+        }
+        contact.setId(max);
+        before.add(contact);
+        Assert.assertEquals(new HashSet<>(before), new HashSet<>(after));
     }
 
 }

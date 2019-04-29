@@ -17,4 +17,8 @@ public class NavigationHelper extends BaseHelper {
         }
         click(By.linkText("groups"));
     }
+
+    public void refreshPage() {
+        wd.navigate().refresh();
+    }
 }

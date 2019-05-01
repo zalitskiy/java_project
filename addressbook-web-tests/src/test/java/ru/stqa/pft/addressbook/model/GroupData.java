@@ -19,7 +19,12 @@ public class GroupData {
         this.header = header;
         this.footer = footer;
     }
-
+    public GroupData(int id, String name) {
+        this.id = id;
+        this.name = name;
+        this.header = null;
+        this.footer = null;
+    }
     public int getId() {
         return id;
     }

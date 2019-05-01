@@ -27,6 +27,16 @@ public class ContactData {
         this.email = email;
         this.group = group;
     }
+    public ContactData(int id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.city = null;
+        this.phoneNumber = null;
+        this.email = null;
+        this.group = null;
+    }
+
     public int getId() {
         return id;
     }

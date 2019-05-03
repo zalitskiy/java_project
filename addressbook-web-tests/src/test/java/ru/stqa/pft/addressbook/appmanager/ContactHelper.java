@@ -57,7 +57,7 @@ public class ContactHelper extends BaseHelper {
         }
     }
 
-    public void createContact(ContactData contactData, boolean creation) {
+    public void create(ContactData contactData, boolean creation) {
         gotoUserCreationPage();
         fillContactForm(contactData, creation);
         submitContactCreation();
@@ -73,14 +73,29 @@ public class ContactHelper extends BaseHelper {
 
     }
 
-    public void modifyContact(int index, ContactData contact) {
+    public void modify(int index, ContactData contact) {
         clickOnEditButton(index);
         fillContactForm(contact, false);
         submitContactUpdate();
         homePage();
     }
 
-    public List<ContactData> getContactList() {
+    public void delete(int index) {
+        markCheckbox(index);
+        deleteContact();
+        acceptAlert();
+        homePage();
+        refreshPage();
+    }
+
+    public void create(ContactData contact) {
+        gotoUserCreationPage();
+        fillContactForm(contact, true);
+        submitContactCreation();
+        homePage();
+    }
+
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<>();
         List<WebElement> rows = wd.findElements(By.xpath("//tr[@name='entry']"));
 

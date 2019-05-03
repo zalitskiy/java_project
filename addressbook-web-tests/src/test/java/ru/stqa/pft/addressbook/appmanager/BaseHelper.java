@@ -59,4 +59,8 @@ public class BaseHelper {
         //}
         get("http://localhost/addressbook/");
     }
+
+    public void refreshPage() {
+        wd.navigate().refresh();
+    }
 }

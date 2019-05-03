@@ -3,16 +3,14 @@ package ru.stqa.pft.addressbook.tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
-
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class ContactCreation extends TestBase {
 
-    @Test
+    @Test(enabled = false)
     public void testContactCreation() throws Exception {
-        app.getContactHelper().get("http://localhost/addressbook/");
+        app.getNavigationHelper().gotoHomePage();
         List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().gotoUserCreationPage();
         ContactData contact = new ContactData("Sergey", "Zalitskiy", "Kharkov", "12345678", "myemail@mail.ru", "[none]");

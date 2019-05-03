@@ -53,7 +53,7 @@ public class BaseHelper {
         }
     }
 
-    public void gotoHomePage() {
+    public void homePage() {
         //if (isElementPresent(By.id("maintable"))) {
         //    return;
         //}

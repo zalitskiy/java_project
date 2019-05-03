@@ -50,7 +50,7 @@ public class ContactHelper extends BaseHelper {
     }
 
     public void markCheckbox(int index) {
-        if (index <= 0){
+        if (index <= 0) {
             wd.findElements(By.name("selected[]")).get(0).click();
         } else {
             wd.findElements(By.name("selected[]")).get(index).click();
@@ -61,7 +61,7 @@ public class ContactHelper extends BaseHelper {
         gotoUserCreationPage();
         fillContactForm(contactData, creation);
         submitContactCreation();
-        gotoHomePage();
+        homePage();
     }
 
     public boolean isThereAContact() {
@@ -73,11 +73,18 @@ public class ContactHelper extends BaseHelper {
 
     }
 
+    public void modifyContact(int index, ContactData contact) {
+        clickOnEditButton(index);
+        fillContactForm(contact, false);
+        submitContactUpdate();
+        homePage();
+    }
+
     public List<ContactData> getContactList() {
         List<ContactData> contacts = new ArrayList<>();
         List<WebElement> rows = wd.findElements(By.xpath("//tr[@name='entry']"));
 
-        for (WebElement cell : rows){
+        for (WebElement cell : rows) {
             List<WebElement> cells = cell.findElements(By.tagName("td"));
             String firstName = cells.get(2).getText();
             //System.out.println(firstName);
@@ -88,6 +95,6 @@ public class ContactHelper extends BaseHelper {
             ContactData contact = new ContactData(id, firstName, lastName);
             contacts.add(contact);
         }
-        return  contacts;
+        return contacts;
     }
 }

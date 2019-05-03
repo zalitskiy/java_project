@@ -10,17 +10,17 @@ public class ContactModification extends TestBase{
 
     @Test(enabled = false)
     public void testContactModification() throws Exception {
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         if (! app.getContactHelper().isThereAContact()) {
             app.getContactHelper().createContact(new ContactData("Sergey", "Zalitskiy", "Kharkov", "12345678", "myemail@mail.ru", "[none]"), true);
         }
         List<ContactData> before = app.getContactHelper().getContactList();
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         app.getContactHelper().clickOnEditButton(before.size() - 1);
         ContactData contact = new ContactData(before.get(before.size() - 1).getId(),"Andrey", "Ibragimovich", "Kiev", "333999666", "his@mail.ru", null);
         app.getContactHelper().fillContactForm(contact, false);
         app.getContactHelper().submitContactUpdate();
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size());
 

@@ -10,7 +10,7 @@ public class ContactDeletion extends TestBase{
 
     @Test(enabled = false)
     public void testContactDeletion() throws Exception {
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         if (! app.getContactHelper().isThereAContact()) {
             app.getContactHelper().createContact(new ContactData("Sergey", "Zalitskiy", "Kharkov", "12345678", "myemail@mail.ru", "[none]"), true);
         }
@@ -18,8 +18,8 @@ public class ContactDeletion extends TestBase{
         app.getContactHelper().markCheckbox(before.size() - 1);
         app.getContactHelper().deleteContact();
         app.getContactHelper().acceptAlert();
-        app.getNavigationHelper().gotoHomePage();
-        app.getNavigationHelper().refreshPage();
+        app.goTo().gotoHomePage();
+        app.goTo().refreshPage();
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() - 1);
         

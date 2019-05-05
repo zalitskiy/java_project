@@ -24,6 +24,7 @@ public class GroupModificationTests extends TestBase {
         GroupData group = new GroupData()
                 .withId(modifiedGroup.getId()).withName("testGroupName6").withHeader("testGroupName6").withFooter("testGroupName6");
         app.group().modify(group);
+        assertThat(app.group().count(), equalTo(before.size())); //хеширование(быстрая проверка того, что у нас совпадают размеры списков)
         Groups after = app.group().all();
         Assert.assertEquals(after.size(), before.size());
 

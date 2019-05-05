@@ -15,7 +15,7 @@ public class ContactCreation extends TestBase {
         Contacts before = app.contact().all();
         ContactData contact = new ContactData()
                 .withFirstName("Serhii").withLastName("Zalitskyi")
-                .withCity("Kharkiv").withPhoneNumber("12345678")
+                .withAddress("Kharkiv").withHomePhone("12345678")
                 .withEmail("myemail@mail.ua").withGroup("[none]");
         app.contact().create(contact);
         Contacts after = app.contact().all();

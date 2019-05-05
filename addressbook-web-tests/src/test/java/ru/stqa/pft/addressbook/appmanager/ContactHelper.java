@@ -8,9 +8,7 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends BaseHelper {
 
@@ -30,9 +28,13 @@ public class ContactHelper extends BaseHelper {
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
-        type(By.name("address"), contactData.getCity());
-        type(By.name("home"), contactData.getPhoneNumber());
+        type(By.name("address"), contactData.getAddress());
+        type(By.name("home"), contactData.getHomePhone());
+        type(By.name("mobile"), contactData.getMobilePhone());
+        type(By.name("work"), contactData.getWorkPhone());
         type(By.name("email"), contactData.getEmail());
+        type(By.name("email2"), contactData.getEmail());
+        type(By.name("email3"), contactData.getEmail());
     }
 
     public void gotoUserCreationPage() {
@@ -59,6 +61,7 @@ public class ContactHelper extends BaseHelper {
         gotoUserCreationPage();
         fillContactForm(contactData, creation);
         submitContactCreation();
+        contactCache = null;
         homePage();
     }
 
@@ -106,14 +109,48 @@ public class ContactHelper extends BaseHelper {
         List<WebElement> rows = wd.findElements(By.xpath("//tr[@name='entry']"));
         for (WebElement cell : rows) {
             List<WebElement> cells = cell.findElements(By.tagName("td"));
+            String allPhones = cells.get(5).getText();
+            //String[] phones = cells.get(5).getText().split("\n");
+            //System.out.println(phones);
+            String allEmails = cells.get(4).getText();
+            String address = cells.get(3).getText();
             String firstName = cells.get(2).getText();
             //System.out.println(firstName);
             String lastName = cells.get(1).getText();
             //System.out.println(lastName);
             int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));
             //System.out.println(id);
-            contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
+            contactCache.add(new ContactData().withId(id).withFirstName(firstName)
+                    .withLastName(lastName).withAllPhones(allPhones).withAllEmails(allEmails).withAddress(address));
         }
         return new Contacts(contactCache);
+    }
+
+    public ContactData infoFromEditForm(ContactData contact) {
+        initContactModificationById(contact.getId());
+        String firstName = wd.findElement(By.xpath("//input[@name='firstname']")).getAttribute("value");
+        String lastName = wd.findElement(By.xpath("//input[@name='lastname']")).getAttribute("value");
+        String address = wd.findElement(By.xpath("//textarea[@name='address']")).getAttribute("value");
+        String homePhone = wd.findElement(By.xpath("//input[@name='home']")).getAttribute("value");
+        String mobilePhone = wd.findElement(By.xpath("//input[@name='mobile']")).getAttribute("value");
+        String workPhone = wd.findElement(By.xpath("//input[@name='work']")).getAttribute("value");
+        String email = wd.findElement(By.xpath("//input[@name='email']")).getAttribute("value");
+        String email2 = wd.findElement(By.xpath("//input[@name='email2']")).getAttribute("value");
+        String email3 = wd.findElement(By.xpath("//input[@name='email3']")).getAttribute("value");
+        wd.navigate().back();
+        return  new ContactData().withId(contact.getId()).withFirstName(firstName)
+                .withLastName(lastName).withAddress(address).withHomePhone(homePhone).withMobilePhone(mobilePhone).withWorkPhone(workPhone)
+                .withEmail(email).withEmail2(email2).withEmail3(email3);
+
+    }
+
+    public void initContactModificationById(int id) {
+        WebElement checkbox = wd.findElement(By.xpath(String.format("//input[@value='%s']", id)));
+        WebElement row = checkbox.findElement(By.xpath("./../.."));
+        List<WebElement> cells = row.findElements(By.tagName("td"));
+        cells.get(7).findElement(By.tagName("a")).click();
+        //wd.findElement(By.xpath(String.format("//input[@value='%s']/../../td[8]/a"))).click();
+        //wd.findElement(By.xpath("//tr[.//input[@value='%s']]/td[8]/a", id))).click();
+        //wd.findElement(By.xpath(String.format("//a[@href='edit.php?id=%s']", id))).click();
     }
 }

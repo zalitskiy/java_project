@@ -52,7 +52,7 @@ public class ContactHelper extends BaseHelper {
     }
 
     public void markCheckboxById(int id) {
-       wd.findElement(By.xpath("//tr[@name='entry']/td[@class='center']/input[@id='"+ id +"']")).click();
+        wd.findElement(By.xpath("//tr[@name='entry']/td[@class='center']/input[@id='" + id + "']")).click();
     }
 
     public void create(ContactData contactData, boolean creation) {
@@ -75,12 +75,14 @@ public class ContactHelper extends BaseHelper {
         clickOnEditButton(contact.getId());
         fillContactForm(contact, false);
         submitContactUpdate();
+        contactCache = null;
         homePage();
     }
 
     public void delete(ContactData contact) {
         markCheckboxById(contact.getId());
         deleteContact();
+        contactCache = null;
         acceptAlert();
         homePage();
         refreshPage();
@@ -90,13 +92,18 @@ public class ContactHelper extends BaseHelper {
         gotoUserCreationPage();
         fillContactForm(contact, true);
         submitContactCreation();
+        contactCache = null;
         homePage();
     }
 
-    public Contacts all() {
-        Contacts contacts = new Contacts();
-        List<WebElement> rows = wd.findElements(By.xpath("//tr[@name='entry']"));
+    private Contacts contactCache = null;
 
+    public Contacts all() {
+        if (contactCache != null) {
+            return new Contacts(contactCache);
+        }
+        contactCache = new Contacts();
+        List<WebElement> rows = wd.findElements(By.xpath("//tr[@name='entry']"));
         for (WebElement cell : rows) {
             List<WebElement> cells = cell.findElements(By.tagName("td"));
             String firstName = cells.get(2).getText();
@@ -105,8 +112,8 @@ public class ContactHelper extends BaseHelper {
             //System.out.println(lastName);
             int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));
             //System.out.println(id);
-            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
+            contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
         }
-        return contacts;
+        return new Contacts(contactCache);
     }
 }

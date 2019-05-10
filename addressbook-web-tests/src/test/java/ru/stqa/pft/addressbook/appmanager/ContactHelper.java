@@ -8,6 +8,7 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.io.File;
 import java.util.List;
 
 public class ContactHelper extends BaseHelper {
@@ -33,8 +34,9 @@ public class ContactHelper extends BaseHelper {
         type(By.name("mobile"), contactData.getMobilePhone());
         type(By.name("work"), contactData.getWorkPhone());
         type(By.name("email"), contactData.getEmail());
-        type(By.name("email2"), contactData.getEmail());
-        type(By.name("email3"), contactData.getEmail());
+        type(By.name("email2"), contactData.getEmail2());
+        type(By.name("email3"), contactData.getEmail3());
+        attach(By.name("photo"), contactData.getPhoto());
     }
 
     public void gotoUserCreationPage() {
@@ -138,7 +140,7 @@ public class ContactHelper extends BaseHelper {
         String email2 = wd.findElement(By.xpath("//input[@name='email2']")).getAttribute("value");
         String email3 = wd.findElement(By.xpath("//input[@name='email3']")).getAttribute("value");
         wd.navigate().back();
-        return  new ContactData().withId(contact.getId()).withFirstName(firstName)
+        return new ContactData().withId(contact.getId()).withFirstName(firstName)
                 .withLastName(lastName).withAddress(address).withHomePhone(homePhone).withMobilePhone(mobilePhone).withWorkPhone(workPhone)
                 .withEmail(email).withEmail2(email2).withEmail3(email3);
 

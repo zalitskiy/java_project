@@ -1,0 +1,26 @@
+<list>
+  <contact>
+    <firstName>FirstName0</firstName>
+    <lastName>LastName0</lastName>
+    <address>Kyiv0</address>
+    <homePhone>123456780</homePhone>
+    <email>myemail0@gmail.com</email>
+    <group>[none]</group>
+  </contact>
+  <contact>
+    <firstName>FirstName1</firstName>
+    <lastName>LastName1</lastName>
+    <address>Kyiv1</address>
+    <homePhone>123456781</homePhone>
+    <email>myemail1@gmail.com</email>
+    <group>[none]</group>
+  </contact>
+  <contact>
+    <firstName>FirstName2</firstName>
+    <lastName>LastName2</lastName>
+    <address>Kyiv2</address>
+    <homePhone>123456782</homePhone>
+    <email>myemail2@gmail.com</email>
+    <group>[none]</group>
+  </contact>
+</list>

@@ -5,9 +5,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
-
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +26,7 @@ public class GroupCreationTests extends TestBase {
         XStream xstream = new XStream();
         xstream.processAnnotations(GroupData.class); //обработать аннотации
         List<GroupData> groups = (List<GroupData>) xstream.fromXML(xml);
-        return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+        return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
     }
 
     @Test(dataProvider = "validGroups")

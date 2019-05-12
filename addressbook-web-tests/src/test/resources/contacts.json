@@ -1,0 +1,26 @@
+[
+  {
+    "firstName": "FirstName4",
+    "lastName": "LastName4",
+    "address": "Kyiv4",
+    "homePhone": "123456784",
+    "email": "myemail4@gmail.com",
+    "group": "[none]"
+  },
+  {
+    "firstName": "FirstName5",
+    "lastName": "LastName5",
+    "address": "Kyiv5",
+    "homePhone": "123456785",
+    "email": "myemail5@gmail.com",
+    "group": "[none]"
+  },
+  {
+    "firstName": "FirstName6",
+    "lastName": "LastName6",
+    "address": "Kyiv6",
+    "homePhone": "123456786",
+    "email": "myemail6@gmail.com",
+    "group": "[none]"
+  }
+]

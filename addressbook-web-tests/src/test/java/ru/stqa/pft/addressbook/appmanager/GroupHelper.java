@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GroupHelper extends BaseHelper {
@@ -96,5 +97,24 @@ public class GroupHelper extends BaseHelper {
             groupCache.add(new GroupData().withId(id).withName(name));
         }
         return new Groups(groupCache);
+    }
+
+    public int getGroupCount() {
+        return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public void selectGroup(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
+    }
+
+    public List<GroupData> getGroupList() {
+        List<GroupData> groups = new ArrayList<>();
+        List<WebElement> elements = wd.findElements(By.xpath("//span[@class='group']"));
+        for(WebElement element : elements) {
+            String name = element.getText();
+            GroupData group = new GroupData().withName(name).withHeader(null).withFooter(null);
+            groups.add(group);
+        }
+        return  groups;
     }
 }

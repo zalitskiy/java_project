@@ -88,7 +88,7 @@ public class GroupHelper extends BaseHelper {
             return new Groups(groupCache);
         }
         groupCache = new Groups();
-        List<WebElement> elements = wd.findElements(By.xpath("//span[@class='group']"));
+        List<WebElement> elements = wd.findElements(By.xpath("//span[@class='groups']"));
         for (WebElement element : elements) {
             String name = element.getText();
             //System.out.println(name);
@@ -109,7 +109,7 @@ public class GroupHelper extends BaseHelper {
 
     public List<GroupData> getGroupList() {
         List<GroupData> groups = new ArrayList<>();
-        List<WebElement> elements = wd.findElements(By.xpath("//span[@class='group']"));
+        List<WebElement> elements = wd.findElements(By.xpath("//span[@class='groups']"));
         for(WebElement element : elements) {
             String name = element.getText();
             GroupData group = new GroupData().withName(name).withHeader(null).withFooter(null);

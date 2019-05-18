@@ -25,7 +25,7 @@ public class ComparingWithHashSet extends TestBase {
         app.group().selectGroup(before.size() - 1); //выбор и в последствии удаление последней группы (-1 потому что нумерация начинается с 0)
         app.group().initGroupModification(); // клик на кнопку Edit
         GroupData group = new GroupData().withId(before.get(before.size() - 1).getId()).withName("test1").withHeader("test2").withFooter("test3");
-        app.group().fillGroupForm(group); //заполняем поля данными объекта group
+        app.group().fillGroupForm(group); //заполняем поля данными объекта groups
         app.group().submitGroupModification(); //кликаем  на кнопку update
         app.group().returnToGroupPage();
         List<GroupData> after = app.group().getGroupList();
@@ -33,7 +33,7 @@ public class ComparingWithHashSet extends TestBase {
 
         //Так как в процессе проверки группа удаляется, то для сравнения колекций (до и после) нужно удалить из коллекции before удаленную группу
         before.remove(before.size() - 1);
-        before.add(group); //добавляем в коллекцию объект group
+        before.add(group); //добавляем в коллекцию объект groups
         Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
         //создаем новые множества из списков и сравниваем их (сравниваются имена и id)
     }

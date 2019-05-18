@@ -53,10 +53,10 @@ public class GroupCreationTests extends TestBase {
     @Test(dataProvider = "validGroups")
     public void testGroupCreation(GroupData group) throws Exception {
         app.goTo().groupPage();
-        Groups before = app.group().all();
+        Groups before = app.db().groups();
         app.group().create(group);
         assertThat(app.group().count(), equalTo(before.size() + 1)); //хеширование(быстрая проверка того, что у нас совпадают размеры списков)
-        Groups after = app.group().all();
+        Groups after = app.db().groups();
         assertThat(after.size(), equalTo(before.size() + 1));
 
         assertThat(after, equalTo(before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));

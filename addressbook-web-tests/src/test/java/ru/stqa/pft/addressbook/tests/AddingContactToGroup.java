@@ -1,19 +1,17 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
-
 import java.io.File;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ContactModification extends TestBase {
+public class AddingContactToGroup extends TestBase {
     @BeforeMethod
     public void ensurePreconditions() {
         app.goTo().groupPage();
@@ -31,17 +29,15 @@ public class ContactModification extends TestBase {
     }
 
     @Test
-    public void testContactModification() throws Exception {
+    public void testAddContactToGroup() throws Exception {
+        app.goTo().homePage();
         Groups groups = app.db().groups();
+        ContactData newContact = new ContactData().withFirstName("FirstName1").withLastName("LastName1")
+                .withAddress("Odessa").withHomePhone("111111111")
+                .withEmail("xxxx@ffff.com").withPhoto(new File("src/test/resources/stru.png")).inGroup(groups.iterator().next());
         Contacts before = app.db().contacts();
-        ContactData modifyContact = before.iterator().next();
-        ContactData contact = new ContactData()
-                .withId(modifyContact.getId())
-                .withFirstName("Andrey").withLastName("Ibragimovich").withAddress("Kyiv").withHomePhone("333999666")
-                .withEmail("his@mail.ru").inGroup(groups.iterator().next()).withPhoto(new File("src/test/resources/stru.png"));
-        app.contact().modify(contact);
+        app.contact().create(newContact);
         Contacts after = app.db().contacts();
-        Assert.assertEquals(after.size(), before.size());
-        assertThat(after, equalTo(before.withOut(modifyContact).withAdded(contact)));
+        assertThat(after.size(), equalTo(before.size() + 1));
     }
 }

@@ -32,11 +32,9 @@ public class AddingContactToGroup extends TestBase {
     public void testAddContactToGroup() throws Exception {
         app.goTo().homePage();
         Groups groups = app.db().groups();
-        ContactData newContact = new ContactData().withFirstName("FirstName1").withLastName("LastName1")
-                .withAddress("Odessa").withHomePhone("111111111")
-                .withEmail("xxxx@ffff.com").withPhoto(new File("src/test/resources/stru.png")).inGroup(groups.iterator().next());
+        System.out.println(groups);
         Contacts before = app.db().contacts();
-        app.contact().create(newContact);
+
         Contacts after = app.db().contacts();
         assertThat(after.size(), equalTo(before.size() + 1));
     }

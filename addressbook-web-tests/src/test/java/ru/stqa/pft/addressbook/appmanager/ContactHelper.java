@@ -158,4 +158,14 @@ public class ContactHelper extends BaseHelper {
         //wd.findElement(By.xpath("//tr[.//input[@value='%s']]/td[8]/a", id))).click();
         //wd.findElement(By.xpath(String.format("//a[@href='edit.php?id=%s']", id))).click();
     }
+
+    public void goToContactDetails(ContactData contact) {
+        markCheckboxById(contact.getId());
+        wd.findElement(By.xpath(String.format("//a[@href='view.php?id=%s']", contact.getId()))).click();
+    }
+
+    public void removeFromGroup(ContactData contact) {
+        wd.findElement(By.xpath("//tr[@name='entry']/td[@class='center']/input[@id='" + contact.getId() + "']")).click();
+        wd.findElement(By.xpath("//div[@class='left']/input[@name='remove']")).click();
+    }
 }

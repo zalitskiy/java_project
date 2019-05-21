@@ -14,7 +14,7 @@ import java.util.List;
 
 public class DbHelper {
 
-    private final SessionFactory sessionFactory;
+    public final SessionFactory sessionFactory;
 
     public DbHelper() {
 // A SessionFactory is set up once for an application!
@@ -40,5 +40,14 @@ public class DbHelper {
         session.getTransaction().commit();
         session.close();
         return new Contacts(result);
+    }
+
+    public Groups groupsInContacts() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<GroupData> result = session.createQuery("from GroupData").list();
+        session.getTransaction().commit();
+        session.close();
+        return new Groups(result);
     }
 }

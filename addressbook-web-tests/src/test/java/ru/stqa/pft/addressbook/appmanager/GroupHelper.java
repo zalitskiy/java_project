@@ -3,6 +3,7 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
@@ -117,4 +118,16 @@ public class GroupHelper extends BaseHelper {
         }
         return  groups;
     }
+
+    public void clickOnGroup(GroupData group) {
+        wd.findElement(By.xpath(String.format("//i/a[@href='index.php?group=%s']", group.getId()))).click();
+    }
+
+    public void selectGroupFromList(GroupData group) {
+        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getName());
+    }
+    public void clickOnAddTo() {
+        wd.findElement(By.xpath("//input[@name='add']")).click();
+    }
+
 }

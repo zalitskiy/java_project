@@ -62,7 +62,7 @@ public class ContactCreation extends TestBase {
         Groups groups = app.db().groups();
         ContactData newContact = new ContactData().withFirstName("FirstName1").withLastName("LastName1")
                 .withAddress("Odessa").withHomePhone("111111111")
-                .withEmail("xxxx@ffff.com").withPhoto(new File("src/test/resources/stru.png")).inGroup(groups.iterator().next());
+                .withEmail("xxxx@ffff.com").withPhoto(new File("src/test/resources/stru.png"));
         Contacts before = app.db().contacts();
         /*ContactData contactFromDP = new ContactData()
                 .withFirstName(contact.getFirstName()).withLastName(contact.getLastName())

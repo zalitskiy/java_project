@@ -120,7 +120,7 @@ public class GroupHelper extends BaseHelper {
     }
 
     public void clickOnGroup(GroupData group) {
-        wd.findElement(By.xpath(String.format("//i/a[@href='index.php?group=%s']", group.getId()))).click();
+        wd.findElement(By.xpath(String.format("//i/a[@href='./index.php?group=%s']", group.getId()))).click();
     }
 
     public void selectGroupFromList(GroupData group) {

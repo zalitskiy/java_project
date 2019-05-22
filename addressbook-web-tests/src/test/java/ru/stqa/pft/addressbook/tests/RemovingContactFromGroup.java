@@ -1,18 +1,17 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.hibernate.SessionFactory;
-import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import java.io.File;
+import java.util.stream.Collectors;
 
 public class RemovingContactFromGroup extends TestBase {
-
-    private SessionFactory sessionFactory;
 
     @BeforeMethod
     public void ensurePreconditions() {
@@ -28,25 +27,33 @@ public class RemovingContactFromGroup extends TestBase {
                     .withEmail("myemail@mail.ua").withPhoto(new File("src/test/resources/stru.png"))
                     .inGroup(groups.iterator().next()), true);
         }
+        Contacts beforeContacts = app.db().contacts().stream()
+                .filter((s) -> s.getGroups().size() > 0).collect(Collectors.toCollection(Contacts::new)); //выбираем контакты, которые не добавлены хотябы в одну группу
+        if (beforeContacts.size() == 0) {
+            app.goTo().homePage();
+            app.contact().create(new ContactData()
+                    .withFirstName("Serhii").withLastName("Zalitskyi").withAddress("Kharkiv").withHomePhone("12345678")
+                    .withEmail("myemail@mail.ua").withPhoto(new File("src/test/resources/stru.png"))
+                    .inGroup(groups.iterator().next()), true);
+        }
     }
 
     @Test
-    public void testAddContactToGroup() throws Exception {
-
-
+    public void testDeleteContactFromGroup() throws Exception {
         app.goTo().homePage();
-        Contacts beforeContacts = app.db().contacts();
-        ContactData selectContact = beforeContacts.iterator().next(); //выбрали контакт
-        Groups beforeGroups = app.db().groups();
-        GroupData selectGroup = beforeGroups.iterator().next(); //выбрали группу
-
+        int groupsCount = app.db().groups().size(); //количество групп
+        Groups beforeGroups = app.db().groups(); //формируем список всех групп
+        Contacts beforeContacts = app.db().contacts().stream()
+                .filter((s) -> s.getGroups().size() > 0).collect(Collectors.toCollection(Contacts::new)); //выбираем контакты, которые добавлены хотя бы в одну группу
+        ContactData selectContact = beforeContacts.iterator().next(); //выбираем контакт
+        Groups listOfGroups = selectContact.getGroups(); // определили список групп в которых состоит контакт
+        GroupData theGroup = listOfGroups.iterator().next();//выбрали группу в для добавления контакта
+        System.out.println(theGroup);
         app.contact().goToContactDetails(selectContact);
-        app.group().clickOnGroup(selectGroup);
+        app.group().clickOnGroup(theGroup);
         app.contact().removeFromGroup(selectContact);
-
-               }
-               // String.format("footer %s", i)
-        //Assert.assertNotEquals(new HashSet<Object>(afterDeletion), new HashSet<Object>(beforeDeletion));
-        //assertThat(after, equalTo(before.withOut(deletedGroup)));
+        Groups groupsOfContactAfter = selectContact.getGroups();// узнали список групп в которых состоит контакт после удаления из группы
+        assertThat(groupsOfContactAfter, equalTo(listOfGroups.withAdded(theGroup)));
     }
+}
 

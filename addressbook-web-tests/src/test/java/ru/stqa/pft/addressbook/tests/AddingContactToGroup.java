@@ -6,16 +6,12 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
-
 import java.io.File;
 import java.util.stream.Collectors;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AddingContactToGroup extends TestBase {
-
-
     @BeforeMethod
     public void ensurePreconditions() {
         if (app.db().groups().size() == 0) {
@@ -51,7 +47,7 @@ public class AddingContactToGroup extends TestBase {
         app.contact().markCheckboxById(selectContact.getId()); //отметили чекбокс контакта
         app.group().selectGroupFromList(theGroup); // выбрали группу из списка
         app.group().clickOnAddTo(); // нажали кнопку add
-        Groups groupsOfContactAfter = selectContact.getGroups();// узнали список групп в которых состоит контакт после удаления из группы
+        Groups groupsOfContactAfter = selectContact.getGroups();// узнали список групп в которых состоит контакт после добавления в группу
         assertThat(groupsOfContactAfter, equalTo(listOfGroups.withOut(theGroup)));
     }
 }

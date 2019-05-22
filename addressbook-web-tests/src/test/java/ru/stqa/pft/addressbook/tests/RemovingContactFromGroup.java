@@ -41,14 +41,11 @@ public class RemovingContactFromGroup extends TestBase {
     @Test
     public void testDeleteContactFromGroup() throws Exception {
         app.goTo().homePage();
-        int groupsCount = app.db().groups().size(); //количество групп
-        Groups beforeGroups = app.db().groups(); //формируем список всех групп
         Contacts beforeContacts = app.db().contacts().stream()
                 .filter((s) -> s.getGroups().size() > 0).collect(Collectors.toCollection(Contacts::new)); //выбираем контакты, которые добавлены хотя бы в одну группу
         ContactData selectContact = beforeContacts.iterator().next(); //выбираем контакт
         Groups listOfGroups = selectContact.getGroups(); // определили список групп в которых состоит контакт
         GroupData theGroup = listOfGroups.iterator().next();//выбрали группу в для добавления контакта
-        System.out.println(theGroup);
         app.contact().goToContactDetails(selectContact);
         app.group().clickOnGroup(theGroup);
         app.contact().removeFromGroup(selectContact);

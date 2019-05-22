@@ -40,16 +40,18 @@ public class TestClass extends TestBase {
         @Test
         public void testAddContactToGroup() throws Exception {
             app.goTo().homePage();
-            int groupsCount = app.db().groups().size();
-            Groups beforeGroups = app.db().groups();
+            int groupsCount = app.db().groups().size(); //количество групп
+            Groups beforeGroups = app.db().groups(); //формируем список всех групп
             Contacts beforeContacts = app.db().contacts().stream().filter((s) -> s.getGroups().size() < groupsCount).collect(Collectors.toCollection(Contacts::new)); //фильтруем список
             System.out.println(beforeContacts);
             ContactData contact = beforeContacts.iterator().next(); //выбираем контакт
             System.out.println(contact);
 
             Groups listOfGroups = contact.getGroups();
-            beforeGroups.removeAll(listOfGroups); // выбираем группу, в которой не состоит контакт
+            beforeGroups.removeAll(listOfGroups);// выбираем группу, в которой не состоит контакт
             System.out.println(beforeGroups);
+            Groups theGroup = beforeGroups;
+            System.out.println(theGroup);
             //.filter((s) -> !s.equals("")).
 
 

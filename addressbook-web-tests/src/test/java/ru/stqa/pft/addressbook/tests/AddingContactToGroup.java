@@ -37,18 +37,25 @@ public class AddingContactToGroup extends TestBase {
     public void testAddContactToGroup() throws Exception {
         app.goTo().homePage();
         int groupsCount = app.db().groups().size(); //количество групп
-        Groups beforeGroups = app.db().groups(); //формируем список всех групп
-        Contacts beforeContacts = app.db().contacts().stream()
+        Groups beforeGroups = app.db().groups(); //формируем список всех групп ДО
+        Groups groups = new Groups(beforeGroups);
+        Contacts beforeContacts = app.db().contacts();//формируем список всех контактов перед добавлением в группу
+        Contacts filterContacts = app.db().contacts().stream()
                 .filter((s) -> s.getGroups().size() < groupsCount).collect(Collectors.toCollection(Contacts::new)); //выбираем контакты, которые не добавлены хотябы в одну группу
-        ContactData selectContact = beforeContacts.iterator().next(); //выбираем контакт
-        Groups listOfGroups = selectContact.getGroups(); // определили список групп в которых состоит контакт
-        beforeGroups.removeAll(listOfGroups);// выбираем группу, в которой не состоит контакт
-        GroupData theGroup = beforeGroups.iterator().next();//выбрали группу в для добавления контакта
+        ContactData selectContact = filterContacts.iterator().next(); //выбираем контакт
+        Groups listOfGroupsOfSelectedContact = selectContact.getGroups(); // определили список групп в которых состоит контакт
+        groups.removeAll(listOfGroupsOfSelectedContact);// выбираем группу, в которой не состоит контакт
+        GroupData theGroup = groups.iterator().next();//выбрали группу в для добавления контакта
         app.contact().markCheckboxById(selectContact.getId()); //отметили чекбокс контакта
         app.group().selectGroupFromList(theGroup); // выбрали группу из списка
         app.group().clickOnAddTo(); // нажали кнопку add
+        Groups afterGroups = app.db().groups(); //формируем список всех групп после добавления контакта
+        Contacts afterContacts = app.db().contacts(); //формируем список всех контактов после добавления в группу
         Groups groupsOfContactAfter = selectContact.getGroups();// узнали список групп в которых состоит контакт после добавления в группу
-        assertThat(groupsOfContactAfter, equalTo(listOfGroups.withOut(theGroup)));
+
+        assertThat(afterContacts, equalTo(beforeContacts));
+        assertThat(afterGroups, equalTo(beforeGroups));
+        assertThat(groupsOfContactAfter, equalTo(listOfGroupsOfSelectedContact.withOut(theGroup)));
     }
 }
 

@@ -41,6 +41,7 @@ public class RemovingContactFromGroup extends TestBase {
     @Test
     public void testDeleteContactFromGroup() throws Exception {
         app.goTo().homePage();
+        Groups beforeGroups = app.db().groups(); //формируем список всех групп ДО
         Contacts beforeContacts = app.db().contacts().stream()
                 .filter((s) -> s.getGroups().size() > 0).collect(Collectors.toCollection(Contacts::new)); //выбираем контакты, которые добавлены хотя бы в одну группу
         ContactData selectContact = beforeContacts.iterator().next(); //выбираем контакт
@@ -49,7 +50,12 @@ public class RemovingContactFromGroup extends TestBase {
         app.contact().goToContactDetails(selectContact);
         app.group().clickOnGroup(theGroup);
         app.contact().removeFromGroup(selectContact);
+        Groups afterGroups = app.db().groups(); //формируем список всех групп после добавления контакта
+        Contacts afterContacts = app.db().contacts(); //формируем список всех контактов после добавления в группу
         Groups groupsOfContactAfter = selectContact.getGroups();// узнали список групп в которых состоит контакт после удаления из группы
+
+        assertThat(afterContacts, equalTo(beforeContacts));
+        assertThat(afterGroups, equalTo(beforeGroups));
         assertThat(groupsOfContactAfter, equalTo(listOfGroups.withAdded(theGroup)));
     }
 }

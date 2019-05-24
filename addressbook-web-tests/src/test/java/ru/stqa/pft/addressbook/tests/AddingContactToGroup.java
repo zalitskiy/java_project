@@ -51,11 +51,14 @@ public class AddingContactToGroup extends TestBase {
         app.group().clickOnAddTo(); // нажали кнопку add
         Groups afterGroups = app.db().groups(); //формируем список всех групп после добавления контакта
         Contacts afterContacts = app.db().contacts(); //формируем список всех контактов после добавления в группу
-        Groups groupsOfContactAfter = selectContact.getGroups();// узнали список групп в которых состоит контакт после добавления в группу
+        Contacts filterContactsAfter = app.db().contacts().stream()
+                .filter((s) -> s.getId() == selectContact.getId()).collect(Collectors.toCollection(Contacts::new)); //выбираем контакт с заданным id
+        ContactData selectContactAfter = filterContactsAfter.iterator().next(); //выбираем контакт
+        Groups groupsAfter = selectContactAfter.getGroups();// определили список групп в которых состоит контакт
 
         assertThat(afterContacts, equalTo(beforeContacts));
         assertThat(afterGroups, equalTo(beforeGroups));
-        assertThat(groupsOfContactAfter, equalTo(listOfGroupsOfSelectedContact.withOut(theGroup)));
+        assertThat(groupsAfter, equalTo(listOfGroupsOfSelectedContact.withAdded(theGroup)));
     }
 }
 

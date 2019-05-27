@@ -17,6 +17,7 @@ public class ApplicationManager {
     private WebDriver wd;
     private String browser;
     private RegistrationHelper registrationHelper;
+    private ChangePasswordHelper changePasswordHelper;
     private FtpHelper ftp;
     private MailHelper mailHelper;
     private JamesHelper jamesHelper;
@@ -50,6 +51,13 @@ public class ApplicationManager {
             registrationHelper = new RegistrationHelper(this);
         }
         return registrationHelper;
+    }
+
+    public ChangePasswordHelper changePassword() {
+        if (changePasswordHelper == null) {
+            changePasswordHelper = new ChangePasswordHelper(this);
+        }
+        return changePasswordHelper;
     }
 
     public FtpHelper ftp() {

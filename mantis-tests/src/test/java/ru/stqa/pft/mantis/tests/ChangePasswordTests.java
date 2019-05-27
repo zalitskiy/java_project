@@ -4,6 +4,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
+import ru.stqa.pft.mantis.model.Accounts;
 import ru.stqa.pft.mantis.model.MailMessage;
 
 import javax.mail.MessagingException;
@@ -14,17 +15,19 @@ import static org.testng.Assert.assertTrue;
 
 public class ChangePasswordTests extends TestBase {
 
-        @BeforeMethod
+        //@BeforeMethod
         public void startMailServer() {
             app.mail().start();
         }
 
         @Test
         public void testChangePassword() throws IOException, MessagingException {
-            //app.
+            app.changePassword().loginAsAdmin();
+            app.changePassword().clickOnManageUsers();
+            Accounts accounts = app.changePassword().accounts();
+            System.out.println(accounts);
 
-
-          //  List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
+            //  List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
 
             //String confirmationLink = findConfirmationLink(mailMessages, email);
             //app.registration().finish(confirmationLink, password);
@@ -37,7 +40,7 @@ public class ChangePasswordTests extends TestBase {
             return regex.getText(mailMessage.text);
         }
 
-        @AfterMethod(alwaysRun = true)
+       // @AfterMethod(alwaysRun = true)
         public void stopMailServer() {
             app.mail().stop();
         }

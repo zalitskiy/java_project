@@ -26,7 +26,7 @@ public class JamesHelper {
         mailSession = Session.getDefaultInstance(System.getProperties());
     }
 
-    public boolean doesUserExist(String name) throws IOException {
+    public boolean doesUserExist(String name)  {
         initTelnetSession();
         write("verify " + name);
         String result = readUntil("exist");
@@ -34,21 +34,21 @@ public class JamesHelper {
         return result.trim().equals("User " + name + " exist");
     }
 
-    public void createUser(String name, String password) throws IOException {
+    public void createUser(String name, String password)  {
         initTelnetSession();
-        write("adduser " + name + " " + password);
+        write(" adduser " + name + " " + password);
         String result = readUntil("User " + name + " added");
         closeTelnetSession();
     }
 
-    public void deleteUser(String name) throws IOException {
+    public void deleteUser(String name)  {
         initTelnetSession();
         write("deluser " + name);
         String result = readUntil("User " + name + " deleted");
         closeTelnetSession();
     }
 
-    public void initTelnetSession() throws IOException {
+    public void initTelnetSession()  {
         mailServer = app.getProperty("mailserver.host");
         int port = Integer.parseInt(app.getProperty("mailserver.port"));
         String login = app.getProperty("mailserver.adminlogin");

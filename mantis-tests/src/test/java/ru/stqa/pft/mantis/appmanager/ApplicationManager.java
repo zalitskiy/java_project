@@ -1,5 +1,6 @@
 package ru.stqa.pft.mantis.appmanager;
 
+import org.hibernate.SessionFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -14,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
     private final Properties properties;
-    private WebDriver wd;
+    WebDriver wd;
     private String browser;
     private RegistrationHelper registrationHelper;
     private ChangePasswordHelper changePasswordHelper;

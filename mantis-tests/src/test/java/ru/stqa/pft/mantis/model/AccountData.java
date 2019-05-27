@@ -6,7 +6,6 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.Objects;
 
-
 @Entity
 @Table(name = "mantis_user_table")
 public class AccountData {

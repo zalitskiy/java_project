@@ -52,6 +52,31 @@ public class AccountData {
         return enabled;
     }
 
+    public AccountData withUserName(String username) {
+        this.username = username;
+        return this;
+    }
+
+    public AccountData withId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public AccountData withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public AccountData withPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public AccountData withEnabled(String enabled) {
+        this.enabled = enabled;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "AccountData{" +

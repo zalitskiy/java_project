@@ -38,4 +38,15 @@ public class Accounts extends ForwardingSet<AccountData> {
         accounts.remove(account);
         return accounts;
     }
+
+    public AccountData findAdmin(Accounts accounts) {
+        AccountData admin = new AccountData();
+        for (AccountData account : accounts) {
+            if (account.getUsername().equals("administrator")) {
+                admin.withUserName(account.getUsername()).withEmail(account.getEmail()).withId(account.getId()).withPassword(account.getPassword());
+                break;
+            }
+        }
+        return admin;
+    }
 }

@@ -4,6 +4,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
+import ru.stqa.pft.mantis.model.AccountData;
 import ru.stqa.pft.mantis.model.Accounts;
 import ru.stqa.pft.mantis.model.MailMessage;
 
@@ -24,17 +25,17 @@ public class ChangePasswordTests extends TestBase {
     public void testChangePassword() throws IOException, MessagingException {
         app.changePassword().loginAsAdmin();
         app.changePassword().clickOnManageUsers();
-        Accounts allAccounts = app.changePassword().all();
-        app.changePassword().clickOnUser(allAccounts);
-        String email = app.changePassword().saveValue("//input[@name='email']");
-        String user = app.changePassword().saveValue("//input[@name='username']");
+        Accounts accountsFromDB = app.changePassword().getAccountsFromDB();// получаем список аккаунтов из БД
+        AccountData administrator = accountsFromDB.findAdmin(accountsFromDB); //находим админа
+        AccountData accountFromDB = accountsFromDB.withOut(administrator).iterator().next(); //выбираем произвольный аккаунт, но не админа
+        app.changePassword().clickOnUser(accountFromDB); //кликаем на этот аккаунт
         String password = "password1";
-        app.changePassword().clickOnReset();
+        app.changePassword().clickOnReset(); //кликаем на кнопку reset
         List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
 
-        String confirmationLink = findConfirmationLink(mailMessages, email);
+        String confirmationLink = findConfirmationLink(mailMessages, accountFromDB.getEmail());
         app.registration().finish(confirmationLink, password);
-        assertTrue(app.newSession().login(user, password));
+        assertTrue(app.newSession().login(accountFromDB.getUsername(), password));
     }
 
     private String findConfirmationLink(List<MailMessage> mailMessages, String email) {

@@ -28,4 +28,10 @@ public class SoapTests extends TestBase {
         Issue created = app.soap().addIssue(issue);
         Assert.assertEquals(issue.getSummary(), created.getSummary());
     }
+
+    @Test
+    public void testIssueIsFixed() throws MalformedURLException, ServiceException, RemoteException {
+        Assert.assertEquals(isIssueOpen(0000001), true);
+    }
+
 }

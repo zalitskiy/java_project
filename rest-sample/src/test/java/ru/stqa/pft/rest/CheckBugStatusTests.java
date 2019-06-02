@@ -14,10 +14,11 @@ public class CheckBugStatusTests extends TestBase {
 
     @Test
     public void testCreateStateIsOpen() throws IOException {
-        Issue newIssue = new Issue().withSubject("Test issue123").withDescription("New test issue123").withStateName("Resolved");
+        Issue newIssue = new Issue().withSubject("Test issue123").withDescription("New test issue123");
         int issueId = createIssue(newIssue);
-        //System.out.println(issueId);
+        String json = RestAssured.get("http://bugify.stqa.ru/api/issues/" + issueId + ".json?limit=1600").asString();
+        //System.out.println(json);
+        System.out.println(issueId);
         skipIfNotFixed(issueId);
-        System.out.println("Hello, world!");
     }
 }

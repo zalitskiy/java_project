@@ -4,14 +4,14 @@ public class Issue {
     private int id;
     private String subject;
     private String description;
-    private int state;
+    private String state_name;
 
-    public int getState() {
-        return state;
+    public String getState_name() {
+        return state_name;
     }
 
-    public Issue withState(int state) {
-        this.state = state;
+    public Issue withStateName(String state_name) {
+        this.state_name = state_name;
         return this;
     }
 
@@ -49,7 +49,7 @@ public class Issue {
                 "id=" + id +
                 ", subject='" + subject + '\'' +
                 ", description='" + description + '\'' +
-                ", state=" + state +
+                ", state_name='" + state_name + '\'' +
                 '}';
     }
 
@@ -61,9 +61,9 @@ public class Issue {
         Issue issue = (Issue) o;
 
         if (id != issue.id) return false;
-        if (state != issue.state) return false;
         if (subject != null ? !subject.equals(issue.subject) : issue.subject != null) return false;
-        return description != null ? description.equals(issue.description) : issue.description == null;
+        if (description != null ? !description.equals(issue.description) : issue.description != null) return false;
+        return state_name != null ? state_name.equals(issue.state_name) : issue.state_name == null;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class Issue {
         int result = id;
         result = 31 * result + (subject != null ? subject.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + state;
+        result = 31 * result + (state_name != null ? state_name.hashCode() : 0);
         return result;
     }
 }

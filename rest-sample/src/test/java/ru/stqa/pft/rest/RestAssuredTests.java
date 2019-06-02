@@ -26,7 +26,7 @@ public class RestAssuredTests extends TestBase{
         RestAssured.authentication = RestAssured.basic("288f44776e7bec4bf44fdfeb1e646490", "");
     }
 
-    @Test(enabled = false)
+    @Test
     public void testCreateIssue() throws IOException {
         Set<Issue> oldIssues = getIssues();
         Issue newIssue = new Issue().withSubject("Test issue").withDescription("New test issue");

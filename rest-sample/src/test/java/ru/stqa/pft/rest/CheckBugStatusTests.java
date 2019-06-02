@@ -14,7 +14,7 @@ public class CheckBugStatusTests extends TestBase {
 
     @Test
     public void testCreateStateIsOpen() throws IOException {
-        Issue newIssue = new Issue().withSubject("Test issue").withDescription("New test issue");
+        Issue newIssue = new Issue().withSubject("Test issue123").withDescription("New test issue123").withStateName("Resolved");
         int issueId = createIssue(newIssue);
         //System.out.println(issueId);
         skipIfNotFixed(issueId);

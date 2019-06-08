@@ -19,6 +19,6 @@ public class EquationTests {
     @Test
     public void test2() {
         Equation e = new Equation(1, 5, 6);
-        Assert.assertEquals(e.getNumber(), 1);
+        Assert.assertEquals(e.getNumber(), 2);
     }
 }

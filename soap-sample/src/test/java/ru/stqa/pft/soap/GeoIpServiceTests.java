@@ -1,7 +1,6 @@
 package ru.stqa.pft.soap;
 
 import com.lavasoft.GeoIPService;
-import com.lavasoft.GeoIPServiceSoap;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

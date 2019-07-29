@@ -14,7 +14,7 @@ public class NewRestTests {
         given().when().get("http://www.google.com").then().statusCode(200);
     }
 
-    @Test
+    @Test(enabled = false)
     public void createNewPlayer() {
         //Создание нового игрока
         /*given().parameters("udid", "4694a9d07a685705", "xpromoId", "com.g5e.playgrounddemo.android")

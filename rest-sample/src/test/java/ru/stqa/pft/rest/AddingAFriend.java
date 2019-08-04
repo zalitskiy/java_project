@@ -3,7 +3,7 @@ package ru.stqa.pft.rest;
 import org.testng.annotations.Test;
 
 import static com.jayway.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.*;
 
 public class AddingAFriend {
     @Test
@@ -41,15 +41,17 @@ public class AddingAFriend {
                 .when().get("https://api.test.pgpl.g5e.com/v2/getFriends").then().statusCode(200).extract().asString();
         System.out.println(info);
         given().parameters( "fields", "id,name,nick", "gameId", "14", "accessToken", tokenTwo)
-                .when().get("https://api.test.pgpl.g5e.com/v2/getFriends").then().statusCode(200).body("friends.id", contains(PlayerOneId));
+                .when().get("https://api.test.pgpl.g5e.com/v2/getFriends").then()
+                .body("friends.id", contains(PlayerOneId))
+                .body("friends.name", contains(PlayerOneName)).statusCode(200); //или hasItem(PlayerOneId)
     }
 
     private void sendAndApproveFriendRequest(String tokenOne, String tokenTwo, String playerOneId, String playerTwoId) {
         given().parameters("playerId", playerOneId, "actionSource", "g5Friends", "accessToken", tokenTwo)
-                .when().get("https://api.test.pgpl.g5e.com/v2/addFriend");
+                .when().post("https://api.test.pgpl.g5e.com/v2/addFriend");
 
         given().parameters("playerId", playerTwoId, "actionSource", "g5Friends", "accessToken", tokenOne)
-                .when().get("https://api.test.pgpl.g5e.com/v2/addFriend");
+                .when().post("https://api.test.pgpl.g5e.com/v2/addFriend");
     }
 
     private String extractNick(String token) {
@@ -69,7 +71,7 @@ public class AddingAFriend {
 
     private String createPlayer(String udid, String xpromoId) {
         return given().parameters("udid", udid, "xpromoId", xpromoId)
-                .when().get("https://api.test.pgpl.g5e.com/v2/createPlayer").then().statusCode(200)
+                .when().post("https://api.test.pgpl.g5e.com/v2/createPlayer").then().statusCode(200)
                 .extract().path("accessToken");
     }
 }
